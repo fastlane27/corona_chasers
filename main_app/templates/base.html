@@ -9,6 +9,9 @@
   <title>Corona Chasers</title>
 </head>
 <body>
+  <a href="{% url 'signup' %}">Sign Up</a>
+  <a href="{% url 'login' %}">Login</a>
+  <a href="{% url 'logout' %}">Log Out</a>
   <main>
     {% block content %}
     {% endblock %} 
