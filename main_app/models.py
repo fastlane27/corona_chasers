@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Global(models.Model):
-    name = models.CharField()
+    name = models.CharField(max_length=100)
     infected = models.IntegerField()
     deaths = models.IntegerField()
     recovered = models.IntegerField()
@@ -12,7 +12,7 @@ class Global(models.Model):
         return self.name
 
 class Country(models.Model):
-    name = models.CharField()
+    name = models.CharField(max_length=100)
     infected = models.IntegerField()
     deaths = models.IntegerField()
     recovered = models.IntegerField()
@@ -30,7 +30,7 @@ class Comment(models.Model):
         return f'Comment {self.id} by {self.created_by.username}'
 
 class Province(models.Model):
-    name = models.CharField()
+    name = models.CharField(max_length=100)
     infected = models.IntegerField()
     deaths = models.IntegerField()
     recovered = models.IntegerField()
