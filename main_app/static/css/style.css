@@ -11,3 +11,8 @@ main {
 footer.page-footer {
     padding-top: 0;
 }
+
+#world {
+    width: 70% !important;
+    
+}

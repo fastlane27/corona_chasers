@@ -2,6 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 
+def country_index(request):
+    return render(request, 'index.html')
+
 def home(request):
     return render(request, 'home.html')
 

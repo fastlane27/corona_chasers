@@ -19,7 +19,7 @@
         <ul class="right">
           {% if user.is_authenticated %}
             <li><a href="{">World</a></li>
-            <li><a href="">Countries</a></li>
+            <li><a href="{% url 'country_index' %}">Countries</a></li>
             <li><a href="">Profile</a></li>
             <li><a href="{% url 'logout' %}">Log Out</a></li>
           {% else %}
