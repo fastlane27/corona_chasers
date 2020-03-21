@@ -10,25 +10,21 @@
   <title>Corona Chasers</title>
 </head>
 <body>
-  <header class="navbar-fixed blue-grey">
+  <header class="navbar-fixed">
     <nav>
-      <div class="nav-wrapper">
+      <div class="nav-wrapper blue-grey">
         <ul>
           <li><a href="/" class="left brand-logo">&nbsp;&nbsp;Corona Chasers</a></li>
         </ul>
         <ul class="right">
-          <li><a href="{% url 'world' %}">World</a></li>
-          <li><a href="{% url 'countries' %}">Countries</a></li>
-          <li><a href="{% url 'signup' %}">Sign Up</a></li>
-          <li><a href="{% url 'login' %}">Login</a></li>
           {% if user.is_authenticated %}
-            <li><a href="{% url 'world' %}">World</a></li>
-            <li><a href="{% url 'countries' %}">Countries</a></li>
-            <li><a href="{% url 'profile' %}">Profile</a></li>
+            <li><a href="{">World</a></li>
+            <li><a href="">Countries</a></li>
+            <li><a href="">Profile</a></li>
             <li><a href="{% url 'logout' %}">Log Out</a></li>
           {% else %}
-            <li><a href="{% url 'world' %}">World</a></li>
-            <li><a href="{% url 'countries' %}">Countries</a></li>
+            <li><a href="">World</a></li>
+            <li><a href="">Countries</a></li>
             <li><a href="{% url 'signup' %}">Sign Up</a></li>
             <li><a href="{% url 'login' %}">Login</a></li>
           {% endif %}
@@ -40,8 +36,8 @@
     {% block content %}
     {% endblock %} 
   </main>
-  <footer class="page-footer">
-    <div class="right">&copy; 2020 Corona Chasers</div>
+  <footer class="page-footer blue-grey">
+    <div class="center">&copy; 2020 Corona Chasers</div>
   </footer>
 </body>
 </html>
