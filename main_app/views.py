@@ -1,6 +1,11 @@
+import boto3
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
-from django.contrib.auth.forms import UserCreationForm
+from .forms import RegistrationForm
+
+S3_BASE_URL = 'https://s3-us-east-2.amazonaws.com/'
+BUCKET = 'coronachaser'
+SESSION = boto3.Session(profile_name='coronachaser')
 
 def country_index(request):
     return render(request, 'index.html')
@@ -11,13 +16,13 @@ def home(request):
 def signup(request):
     error_message = ''
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = RegistrationForm(request.POST)
         if form.is_valid():
             user = form.save()
             login(request, user)
             return redirect('home')
         else:
             error_message = 'Invalid sign up - try again'
-    form = UserCreationForm()
+    form = RegistrationForm()
     context = {'form': form, 'error_message': error_message}
     return render(request, 'registration/signup.html', context)
