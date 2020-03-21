@@ -5,6 +5,7 @@
 
 {% if user.is_authenticated %}
   <h3>Logged in as {{ user.username }}</h3>
+  <img src="{{ user.profile.avatar }}">
 {% endif %}
 
 {% endblock %}
