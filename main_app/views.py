@@ -43,7 +43,7 @@ def countries_detail(request, country_id):
 def profile_index(request):
     pass
 
-def assoc_country(request, profile, countryy_id):
+def assoc_country(request, profile, country_id):
     pass
 
 def unassoc_country(request, profile, country_id):
