@@ -3,7 +3,7 @@ from django.contrib.auth import login
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 from .forms import RegistrationForm
-from .models import Comment, Country
+from .models import Comment, Country, Profile
 
 class CommentCreate(CreateView):
     model = Comment
@@ -40,8 +40,9 @@ def countries_index(request):
 def countries_detail(request, country_id):
     pass
 
-def profile_index(request):
-    pass
+def profiles_detail(request, profile_id):
+    profile = Profile.objects.get(id=profile_id)
+    return render(request, 'profile.html', {'user': profile.user})
 
 def assoc_country(request, profile, country_id):
     pass
