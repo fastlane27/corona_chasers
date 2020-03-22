@@ -4,11 +4,6 @@ from . import views
 urlpatterns = [
     path('', views.home, name='home'),
     path('accounts/signup/', views.signup, name='signup'),
-<<<<<<< HEAD
-    path('countries/index/', views.country_index, name='index'),
-    path('countries/country/', views.country, name='country'),
-    path('profile/', views.profile, name='profile'),
-=======
     path('countries/', views.countries_index, name='countries_index'),
     path('countries/<int:country_id>/',
          views.countries_detail, name='countries_detail'),
@@ -24,5 +19,4 @@ urlpatterns = [
          views.assoc_country, name='assoc_country'),
     path('profiles/<int:profile_id>/unassoc_country/<int:country_id>/',
          views.unassoc_country, name='unassoc_country'),
->>>>>>> master
 ]
