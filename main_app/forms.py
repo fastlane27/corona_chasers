@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from .models import Profile
 from .utils import upload_file
 
+
 class RegistrationForm(UserCreationForm):
     avatar = forms.ImageField(required=False)
 
