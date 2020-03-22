@@ -1,11 +1,6 @@
-import boto3
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from .forms import RegistrationForm
-
-S3_BASE_URL = 'https://s3-us-east-2.amazonaws.com/'
-BUCKET = 'coronachaser'
-SESSION = boto3.Session(profile_name='coronachaser')
 
 def home(request):
     return render(request, 'home.html')
@@ -13,7 +8,7 @@ def home(request):
 def signup(request):
     error_message = ''
     if request.method == 'POST':
-        form = RegistrationForm(request.POST)
+        form = RegistrationForm(request.POST, request.FILES)
         if form.is_valid():
             user = form.save()
             login(request, user)
