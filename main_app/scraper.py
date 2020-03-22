@@ -1,9 +1,7 @@
-from bs4 import BeautifulSoup as soup
-from urllib.request import urlopen as user_req
-from urllib.request import urlopen
-from .models import Global, Country, Province
 import json
-import os.path
+from urllib.request import urlopen as user_req
+from bs4 import BeautifulSoup as soup
+from .models import Global, Country, Province
 
 
 def pop_database():
