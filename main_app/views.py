@@ -10,12 +10,12 @@ class CommentCreate(CreateView):
     fields = '__all__'
 
 class CommentUpdate(UpdateView):
-  model = Comment
-  fields = ['posted_at', 'content']
+    model = Comment
+    fields = ['posted_at', 'content']
 
 class CommentDelete(DeleteView):
-  model = Comment
-  success_url = '/countries/<int:country_id>/'
+    model = Comment
+    success_url = '/countries/<int:country_id>/'
 
 def home(request):
     return render(request, 'home.html')
@@ -35,19 +35,19 @@ def signup(request):
     return render(request, 'registration/signup.html', context)
 
 def countries_index(request):
-  pass
+    pass
 
 def countries_detail(request, country_id):
-  pass
+    pass
 
 def profile_index(request):
-  pass
+    pass
 
 def assoc_country(request, profile, countryy_id):
-  pass
+    pass
 
 def unassoc_country(request, profile, country_id):
-  pass
+    pass
 
 class CountryList(ListView):
-  model = Country
+    model = Country
