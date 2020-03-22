@@ -7,8 +7,14 @@ S3_BASE_URL = 'https://s3-us-east-2.amazonaws.com/'
 BUCKET = 'coronachaser'
 SESSION = boto3.Session(profile_name='coronachaser')
 
+def profile(request):
+    return render(request, 'profile.html')
+
 def country_index(request):
-    return render(request, 'index.html')
+    return render(request, 'countries/index.html')
+
+def country(request):
+    return render(request, 'countries/country.html')
 
 def home(request):
     return render(request, 'home.html')
