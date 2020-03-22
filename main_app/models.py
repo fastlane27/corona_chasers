@@ -41,7 +41,7 @@ class Province(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    avatar = models.URLField(max_length=200)
+    avatar = models.URLField()
 
     def __str__(self):
         return f"{self.user.username}'s profile"
