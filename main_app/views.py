@@ -6,7 +6,7 @@ from .forms import RegistrationForm
 from .models import Comment, Country, Profile
 from .scraper import pop_database
 
-pop_database()
+pop_database() 
 
 
 class CommentCreate(CreateView):
