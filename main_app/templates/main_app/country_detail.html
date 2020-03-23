@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1 class="center">China</h1>
+<h1 class="center">{{ country.name }}</h1>
 <div class="container world">
   <div class="centered">
     <div class="col s12">
@@ -17,9 +17,9 @@
             </thead>
             <tbody>
               <tr>
-                <td>123</td>
-                <td>1,000</td>
-                <td>1,000</td>
+                <td>{{ country.infected }}</td>
+                <td>{{ country.recovered }}</td>
+                <td>{{ country.deaths }}</td>
               </tr>
             </tbody>
           </table>
@@ -28,6 +28,11 @@
     </div>
   </div>
 </div>
+
+{% if country.province_set.first %}
+  <a href="{% url 'provinces_index' country.id %}">Provinces</a>
+{% endif %}
+
 <h1 class="left">Comments</h1>
 <div class="row">
     <form class="col s12">
