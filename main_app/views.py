@@ -6,7 +6,7 @@ from .forms import RegistrationForm
 from .models import Comment, Country, Profile
 from .scraper import pop_database
 
-pop_database()
+pop_database() 
 
 
 class CommentCreate(CreateView):
@@ -23,6 +23,15 @@ class CommentDelete(DeleteView):
     model = Comment
     success_url = '/countries/<int:country_id>/'
 
+
+def profile(request):
+    return render(request, 'profile.html')
+
+def country_index(request):
+    return render(request, 'countries/index.html')
+
+def country(request):
+    return render(request, 'countries/country.html')
 
 def home(request):
     return render(request, 'home.html')
