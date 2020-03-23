@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Provinces</h1>
+<table class="highlight">
+  <thead>
+    <tr>
+      <th>Province</th>
+      <th>Current Cases</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for province in province_list %}
+        <tr>
+          <td>{{ province.name }}</td>
+          <td>{{ province.infected }}</td>
+        </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
