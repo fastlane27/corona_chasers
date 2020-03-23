@@ -13,7 +13,7 @@
 <body>
   <nav class="nav-wrapper blue-grey">
     <div class="container">
-      <a href="/" class="left brand-logo">&nbsp;&nbsp;Corona Chasers</a>
+      <a href="{% url 'home' %}" class="left brand-logo">&nbsp;&nbsp;Corona Chasers</a>
       <a href="#" class="sidenav-trigger" data-target="mobile-links">
         <i class="material-icons">menu</i>
       </a>
@@ -41,20 +41,25 @@
       <li><a href="{% url 'login' %}">Login</a></li>
     {% endif %}
   </ul>
-  <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+  
+  <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+			integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+			crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <script>
     $(document).ready(function(){
       $('.sidenav').sidenav();
     })
   </script>
+
   <main class="container">
     {% block content %}
     {% endblock %} 
   </main>
+
   <footer class="page-footer blue-grey">
     <div class="center">&copy; 2020 Corona Chasers</div>
   </footer>
-  
 </body>
 </html>

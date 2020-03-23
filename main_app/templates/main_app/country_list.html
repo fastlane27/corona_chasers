@@ -11,7 +11,7 @@
   </thead>
   <tbody>
     {% for country in country_list %}
-        <tr data-href="{% url 'countries_detail' country.id %}">
+        <tr class="clickable" data-href="{% url 'countries_detail' country.id %}">
           <td>{{ country.name }}</td>
           <td>{{ country.infected }}</td>
         </tr>
@@ -21,9 +21,10 @@
 
 <script>
   $(document).ready(function () {
-    $(document.body).on('click', 'tr[data-href]', function () {
-        window.location.href = this.dataset.href;
+    $('.clickable').click(function() {
+      window.location.href = this.dataset.href;
     });
   });
 </script>
+
 {% endblock %}
