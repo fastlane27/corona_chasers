@@ -1,8 +1,27 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>{{ user.username }}'s Page</h1>
+<!-- <img src="{{ profile.avatar }}"> -->
+<h1 class="center">{{ user.username }}</h1>
 
 <img src="{{ user.profile.avatar }}">
+
+<table class="responsive-table centered">
+    <thead>
+        <tr>
+            <th>Tracked Country</th>
+            <th>Current Cases</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>USA</td>
+            <td>10,000</td>
+        </tr>
+    </tbody>
+</table>
+
+{% endblock %}
+<h1>{{ user.username }}'s Page</h1>
 
 {% endblock %}
