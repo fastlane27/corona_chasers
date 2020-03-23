@@ -13,7 +13,7 @@ urlpatterns = [
          views.CommentUpdate.as_view(), name='comments_update'),
     path('countries/<int:country_id>/comments/<int:pk>/delete/',
          views.CommentDelete.as_view(), name='comments_delete'),
-    path('profiles/<int:profile_id>/',
+    path('profiles/',
          views.profiles_detail, name='profiles_detail'),
     path('profiles/<int:profile_id>/assoc_country/<int:country_id>/',
          views.assoc_country, name='assoc_country'),

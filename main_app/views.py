@@ -6,27 +6,8 @@ from .forms import RegistrationForm
 from .models import Comment, Country, Profile
 from .scraper import pop_database
 
-pop_database() 
+# pop_database()
 
-
-class CommentCreate(CreateView):
-    model = Comment
-    fields = '__all__'
-
-
-class CommentUpdate(UpdateView):
-    model = Comment
-    fields = ['posted_at', 'content']
-
-
-class CommentDelete(DeleteView):
-    model = Comment
-    success_url = '/countries/<int:country_id>/'
-
-
-def profile(request):
-    return render(request, 'profile.html')
-    
 
 def home(request):
     return render(request, 'home.html')
@@ -70,3 +51,18 @@ def unassoc_country(request, profile, country_id):
 
 class CountryList(ListView):
     model = Country
+
+
+class CommentCreate(CreateView):
+    model = Comment
+    fields = '__all__'
+
+
+class CommentUpdate(UpdateView):
+    model = Comment
+    fields = ['posted_at', 'content']
+
+
+class CommentDelete(DeleteView):
+    model = Comment
+    success_url = '/countries/<int:country_id>/'
