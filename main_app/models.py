@@ -42,7 +42,7 @@ class Comment(models.Model):
         return f'Comment {self.id} by {self.created_by.username}'
 
     class Meta:
-        ordering = ['posted_at']
+        ordering = ['-posted_at']
 
 
 class Province(models.Model):
