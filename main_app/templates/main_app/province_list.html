@@ -7,6 +7,8 @@
     <tr>
       <th>Province</th>
       <th>Current Cases</th>
+      <th>Recovered Cases</th>
+      <th>Deaths</th>
     </tr>
   </thead>
   <tbody>
@@ -14,6 +16,8 @@
       <tr>
         <td>{{ province.name }}</td>
         <td>{{ province.infected }}</td>
+        <td>{{ province.recovered }}</td>
+        <td>{{ province.deaths }}</td>
       </tr>
     {% endfor %}
   </tbody>

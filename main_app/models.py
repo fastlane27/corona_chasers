@@ -28,6 +28,9 @@ class Country(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        ordering = ['-infected']
+
 
 class Comment(models.Model):
     posted_at = models.DateTimeField()
@@ -37,6 +40,9 @@ class Comment(models.Model):
 
     def __str__(self):
         return f'Comment {self.id} by {self.created_by.username}'
+
+    class Meta:
+        ordering = ['-posted_at']
 
 
 class Province(models.Model):
@@ -48,6 +54,9 @@ class Province(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        ordering = ['-infected']
 
 
 class Profile(models.Model):
