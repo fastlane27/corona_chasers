@@ -52,7 +52,9 @@ class CountryDetail(DetailView):
 
 class ProvinceList(ListView):
     model = Province
-    # queryset = Country.objects.get(name=).province_set.all()
+
+    def get_queryset(self):
+        return Province.objects.filter(country=self.kwargs['pk'])
 
 
 class CommentCreate(CreateView):
