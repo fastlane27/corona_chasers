@@ -40,6 +40,18 @@ def add_comment(request, country_id):
         new_comment.save()
     return redirect('countries_detail', pk=country_id)
 
+def delete_comment(request, country_id, comment_id):
+    Country.objects.get(id=country_id).comment_set.get(id=comment_id).delete()
+    return redirect('countries_detail', pk=country_id)
+
+def update_comment(request, country_id, comment_id):
+    form = CommentForm(request.POST)
+    comment = Country.objects.get(id=country_id).comment_set.get(id=comment_id)
+    if form.is_valid():
+        comment.content = form.data.get('content', None)
+        comment.save()
+    return redirect('countries_detail', pk=country_id)
+
 
 def profiles_detail(request):
     profile = Profile.objects.get(user=request.user)

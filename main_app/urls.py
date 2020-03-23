@@ -8,6 +8,8 @@ urlpatterns = [
      path('countries/<int:pk>/',
          views.CountryDetail.as_view(), name='countries_detail'),
      path('countries/<int:country_id>/add_comment/', views.add_comment, name='add_comment'),
+     path('countries/<int:country_id>/delete_comment/<int:comment_id>/', views.delete_comment, name='delete_comment'),
+     path('countries/<int:country_id>/update_comment/<int:comment_id>/', views.update_comment, name='update_comment'),
 #     path('countries/<int:country_id>/comments/create/',
 #          views.CommentCreate.as_view(), name='comments_create'),
 #     path('countries/<int:country_id>/comments/<int:pk>/update/',

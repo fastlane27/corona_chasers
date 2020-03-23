@@ -52,6 +52,15 @@
       {{ comment.content }}
       {{ comment.posted_at }}
     </div>
+    <form action="{% url 'delete_comment' country.id comment.id %}" method="post">
+      {% csrf_token %}
+      <input type="submit" value="Delete">
+    </form>
+    <form action="{% url 'update_comment' country.id comment.id %}" method="post">
+      {% csrf_token %}
+      {{ comment_form.as_p }}
+      <input type="submit" value="Update">
+    </form>
   {% endfor %}
 </div>
 
