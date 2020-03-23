@@ -20,7 +20,7 @@
       <ul class="right hide-on-med-and-down">
         {% if user.is_authenticated %}
           <li><a href="/">World</a></li>
-          <li><a href="{% url 'index' %}">Countries</a></li>
+          <li><a href="{% url 'home' %}">Countries</a></li>
           <li><a href="">Profile</a></li>
           <li><a href="{% url 'logout' %}">Log Out</a></li>
         {% else %}
@@ -35,12 +35,12 @@
   <ul class="sidenav right" id="mobile-links">
     {% if user.is_authenticated %}
       <li><a href="/">World</a></li>
-      <li><a href="{% url 'index' %}">Countries</a></li>
+      <li><a href="{% url 'home' %}">Countries</a></li>
       <li><a href="">Profile</a></li>
       <li><a href="{% url 'logout' %}">Log Out</a></li>
     {% else %}
       <li><a href="/">World</a></li>
-      <li><a href="{% url 'index' %}">Countries</a></li>
+      <li><a href="{% url 'home' %}">Countries</a></li>
       <li><a href="{% url 'signup' %}">Sign Up</a></li>
       <li><a href="{% url 'login' %}">Login</a></li>
     {% endif %}

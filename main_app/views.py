@@ -26,12 +26,7 @@ class CommentDelete(DeleteView):
 
 def profile(request):
     return render(request, 'profile.html')
-
-def country_index(request):
-    return render(request, 'countries/index.html')
-
-def country(request):
-    return render(request, 'countries/country.html')
+    
 
 def home(request):
     return render(request, 'home.html')
@@ -53,11 +48,11 @@ def signup(request):
 
 
 def countries_index(request):
-    pass
+    return render(request, 'countries/index.html')
 
 
 def countries_detail(request, country_id):
-    pass
+    return render(request, 'countries/detail.html')
 
 
 def profiles_detail(request, profile_id):
