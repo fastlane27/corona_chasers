@@ -5,16 +5,60 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
   <title>Corona Chasers</title>
 </head>
 <body>
-  <a href="{% url 'signup' %}">Sign Up</a>
-  <a href="{% url 'login' %}">Login</a>
-  <a href="{% url 'logout' %}">Log Out</a>
-  <main>
+  <nav class="nav-wrapper blue-grey">
+    <div class="container">
+      <a href="/" class="left brand-logo">&nbsp;&nbsp;Corona Chasers</a>
+      <a href="#" class="sidenav-trigger" data-target="mobile-links">
+        <i class="material-icons">menu</i>
+      </a>
+      <ul class="right hide-on-med-and-down">
+        {% if user.is_authenticated %}
+          <li><a href="/">World</a></li>
+          <li><a href="{% url 'index' %}">Countries</a></li>
+          <li><a href="">Profile</a></li>
+          <li><a href="{% url 'logout' %}">Log Out</a></li>
+        {% else %}
+          <li><a href="/">World</a></li>
+          <li><a href="">Countries</a></li>
+          <li><a href="{% url 'signup' %}">Sign Up</a></li>
+          <li><a href="{% url 'login' %}">Login</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </nav>
+  <ul class="sidenav right" id="mobile-links">
+    {% if user.is_authenticated %}
+      <li><a href="/">World</a></li>
+      <li><a href="{% url 'index' %}">Countries</a></li>
+      <li><a href="">Profile</a></li>
+      <li><a href="{% url 'logout' %}">Log Out</a></li>
+    {% else %}
+      <li><a href="/">World</a></li>
+      <li><a href="{% url 'index' %}">Countries</a></li>
+      <li><a href="{% url 'signup' %}">Sign Up</a></li>
+      <li><a href="{% url 'login' %}">Login</a></li>
+    {% endif %}
+  </ul>
+  <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+  <script>
+    $(document).ready(function(){
+      $('.sidenav').sidenav();
+    })
+  </script>
+  <main class="container">
     {% block content %}
     {% endblock %} 
   </main>
+  <footer class="page-footer blue-grey">
+    <div class="center">&copy; 2020 Corona Chasers</div>
+  </footer>
+  
 </body>
 </html>
