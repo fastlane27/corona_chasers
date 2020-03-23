@@ -1,8 +1,9 @@
+from datetime import datetime
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
-from .forms import RegistrationForm
+from .forms import RegistrationForm, CommentForm
 from .models import Comment, Country, Profile, Global, Province
 from .scraper import pop_database
 
@@ -29,6 +30,29 @@ def signup(request):
     return render(request, 'registration/signup.html', context)
 
 
+def add_comment(request, country_id):
+    form = CommentForm(request.POST)
+    if form.is_valid():
+        new_comment = form.save(commit=False)
+        new_comment.posted_at = datetime.now()
+        new_comment.created_by = request.user
+        new_comment.country_id = country_id
+        new_comment.save()
+    return redirect('countries_detail', pk=country_id)
+
+def delete_comment(request, country_id, comment_id):
+    Country.objects.get(id=country_id).comment_set.get(id=comment_id).delete()
+    return redirect('countries_detail', pk=country_id)
+
+def update_comment(request, country_id, comment_id):
+    form = CommentForm(request.POST)
+    comment = Country.objects.get(id=country_id).comment_set.get(id=comment_id)
+    if form.is_valid():
+        comment.content = form.data.get('content', None)
+        comment.save()
+    return redirect('countries_detail', pk=country_id)
+
+
 def profiles_detail(request):
     profile = Profile.objects.get(user=request.user)
     return render(request, 'profile.html', {'user': profile.user})
@@ -49,10 +73,16 @@ class CountryList(ListView):
 class CountryDetail(DetailView):
     model = Country
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['comment_form'] = CommentForm()
+        return context
 
 class ProvinceList(ListView):
     model = Province
-    # queryset = Country.objects.get(name=).province_set.all()
+
+    def get_queryset(self):
+        return Province.objects.filter(country=self.kwargs['pk'])
 
 
 class CommentCreate(CreateView):
