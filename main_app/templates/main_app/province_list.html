@@ -11,11 +11,12 @@
   </thead>
   <tbody>
     {% for province in province_list %}
-        <tr>
-          <td>{{ province.name }}</td>
-          <td>{{ province.infected }}</td>
-        </tr>
+      <tr>
+        <td>{{ province.name }}</td>
+        <td>{{ province.infected }}</td>
+      </tr>
     {% endfor %}
   </tbody>
 </table>
+
 {% endblock %}
