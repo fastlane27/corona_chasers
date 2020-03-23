@@ -3,14 +3,15 @@ from django.contrib.auth import login
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 from .forms import RegistrationForm
-from .models import Comment, Country, Profile
+from .models import Comment, Country, Profile, Global, Province
 from .scraper import pop_database
 
 # pop_database()
 
 
 def home(request):
-    return render(request, 'home.html')
+    world = Global.objects.first()
+    return render(request, 'home.html', {'world': world})
 
 
 def signup(request):
@@ -28,16 +29,8 @@ def signup(request):
     return render(request, 'registration/signup.html', context)
 
 
-def countries_index(request):
-    return render(request, 'countries/index.html')
-
-
-def countries_detail(request, country_id):
-    return render(request, 'countries/detail.html')
-
-
-def profiles_detail(request, profile_id):
-    profile = Profile.objects.get(id=profile_id)
+def profiles_detail(request):
+    profile = Profile.objects.get(user=request.user)
     return render(request, 'profile.html', {'user': profile.user})
 
 
@@ -51,6 +44,15 @@ def unassoc_country(request, profile, country_id):
 
 class CountryList(ListView):
     model = Country
+
+
+class CountryDetail(DetailView):
+    model = Country
+
+
+class ProvinceList(ListView):
+    model = Province
+    # queryset = Country.objects.get(name=).province_set.all()
 
 
 class CommentCreate(CreateView):
