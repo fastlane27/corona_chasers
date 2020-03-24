@@ -65,7 +65,7 @@
 
 <div class="row">
   {% for comment in country.comment_set.all %}
-    <h4 class="left">{{ comment.created_by }}</h4>
+    <h4 class="left"><a href="{% url 'profiles_detail' comment.created_by.id %}">{{ comment.created_by }}</a></h4>
     <img src="{{ comment.created_by.profile.avatar }}" width=70px height=50px>
     <div>
       {{ comment.content }}
