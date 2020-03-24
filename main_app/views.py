@@ -10,7 +10,7 @@ from .models import Comment, Country, Global, Province, Profile
 from .scraper import pop_database
 
 
-# pop_database()
+pop_database()
 
 
 def home(request):
@@ -80,6 +80,7 @@ def unassoc_country(request, country_id):
 class ProfileList(ListView):
     model = User
     template_name = 'main_app/profile_list.html'
+
     def get_queryset(self):
         query = self.request.GET.get('search')
         if query:
@@ -89,6 +90,13 @@ class ProfileList(ListView):
 
 class CountryList(ListView):
     model = Country
+
+    def get_queryset(self):
+        query = self.request.GET.get('search')
+        if query:
+            return Country.objects.filter(name__icontains=query)
+        else:
+            return Country.objects.all()
 
 class CountryDetail(DetailView):
     model = Country
@@ -100,4 +108,8 @@ class CountryDetail(DetailView):
 
 class ProvinceList(ListView):
     def get_queryset(self):
-        return Province.objects.filter(country=self.kwargs['pk'])
+        query = self.request.GET.get('search')
+        if query:
+            return Province.objects.filter(country=self.kwargs['pk'], name__icontains=query)
+        else:
+            return Province.objects.filter(country=self.kwargs['pk'])
