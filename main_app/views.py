@@ -9,10 +9,6 @@ from .forms import RegistrationForm, CommentForm
 from .models import Comment, Country, Global, Province, Profile
 from .scraper import pop_database
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 1afe0cb7082eae657c98de44a1d36cb80a3a6298
 # pop_database()
 
 
