@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Profiles</h1>
+
+<form action="" method="get">
+  <input type="search" name="search" placeholder="Search Profile">
+</form>
+
+<table class="highlight">
+  <thead>
+      <tr>
+        <th></th>
+        <th></th>
+      </tr>
+  </thead>
+  <tbody>
+    {% for p in user_list %}
+        <tr class="clickable" data-href="{% url 'profiles_detail' p.id %}">
+          <td><img src="{{ p.profile.avatar }}"></td>
+          <td>{{ p.username }}</td>
+        </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<script>
+  $(document).ready(function () {
+    $('.clickable').click(function() {
+      window.location.href = this.dataset.href;
+    });
+  });
+</script>
+
+{% endblock %}

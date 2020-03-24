@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, DetailView
 from django.http import HttpResponseRedirect
 from .forms import RegistrationForm, CommentForm
-from .models import Comment, Country, Global, Province
+from .models import Comment, Country, Global, Province, Profile
 from .scraper import pop_database
 
 
@@ -77,9 +77,18 @@ def unassoc_country(request, country_id):
 
 
 
+class ProfileList(ListView):
+    model = User
+    template_name = 'main_app/profile_list.html'
+    def get_queryset(self):
+        query = self.request.GET.get('search')
+        if query:
+            return User.objects.filter(username__icontains=query)
+        else:
+            return User.objects.all()
+
 class CountryList(ListView):
     model = Country
-
 
 class CountryDetail(DetailView):
     model = Country
@@ -88,7 +97,6 @@ class CountryDetail(DetailView):
         context = super().get_context_data(**kwargs)
         context['comment_form'] = CommentForm()
         return context
-
 
 class ProvinceList(ListView):
     def get_queryset(self):
