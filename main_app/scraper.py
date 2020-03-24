@@ -64,18 +64,18 @@ def pop_database():
     # Runs a loop for the amount of provinces/countries
     for all_sets in page_dict['rawData']:
         # If country has no provinces create/update country
-        if page_dict['rawData'][num]['Province/State'] == '':
-            if page_dict['rawData'][num]['Country/Region'] in Country.objects.all().values_list('name', flat=True):
+        if page_dict['rawData'][num]['Province_State'] == '':
+            if page_dict['rawData'][num]['Country_Region'] in Country.objects.all().values_list('name', flat=True):
                 c = Country.objects.get(
-                    name=page_dict['rawData'][num]['Country/Region'])
-                c.name = page_dict['rawData'][num]['Country/Region']
+                    name=page_dict['rawData'][num]['Country_Region'])
+                c.name = page_dict['rawData'][num]['Country_Region']
                 c.infected = int(page_dict['rawData'][num]['Confirmed'])
                 c.recovered = int(page_dict['rawData'][num]['Recovered'])
                 c.deaths = int(page_dict['rawData'][num]['Deaths'])
                 c.save()
             else:
                 country_object = Country(
-                    name=page_dict['rawData'][num]['Country/Region'],
+                    name=page_dict['rawData'][num]['Country_Region'],
                     infected=int(page_dict['rawData'][num]['Confirmed']),
                     recovered=int(page_dict['rawData'][num]['Recovered']),
                     deaths=int(page_dict['rawData'][num]['Deaths']),
@@ -83,17 +83,17 @@ def pop_database():
                 country_object.save()
         else:
             # If country exists update, if not create
-            if page_dict['rawData'][num]['Country/Region'] in Country.objects.all().values_list('name', flat=True):
+            if page_dict['rawData'][num]['Country_Region'] in Country.objects.all().values_list('name', flat=True):
                 c = Country.objects.get(
-                    name=page_dict['rawData'][num]['Country/Region'])
-                c.name = page_dict['rawData'][num]['Country/Region']
+                    name=page_dict['rawData'][num]['Country_Region'])
+                c.name = page_dict['rawData'][num]['Country_Region']
                 c.infected += int(page_dict['rawData'][num]['Confirmed'])
                 c.recovered += int(page_dict['rawData'][num]['Recovered'])
                 c.deaths += int(page_dict['rawData'][num]['Deaths'])
                 c.save()
             else:
                 country_object = Country(
-                    name=page_dict['rawData'][num]['Country/Region'],
+                    name=page_dict['rawData'][num]['Country_Region'],
                     infected=int(page_dict['rawData'][num]['Confirmed']),
                     recovered=int(page_dict['rawData'][num]['Recovered']),
                     deaths=int(page_dict['rawData'][num]['Deaths']),
@@ -101,24 +101,24 @@ def pop_database():
                 country_object.save()
 
             # If province exists update, if not create
-            if page_dict['rawData'][num]['Province/State'] in Province.objects.all().values_list('name', flat=True):
+            if page_dict['rawData'][num]['Province_State'] in Province.objects.all().values_list('name', flat=True):
                 p = Province.objects.get(
-                    name=page_dict['rawData'][num]['Province/State'])
-                p.name = page_dict['rawData'][num]['Province/State']
+                    name=page_dict['rawData'][num]['Province_State'])
+                p.name = page_dict['rawData'][num]['Province_State']
                 p.country = Country.objects.get(
-                    name=page_dict['rawData'][num]['Country/Region'])
+                    name=page_dict['rawData'][num]['Country_Region'])
                 p.infected += int(page_dict['rawData'][num]['Confirmed'])
                 p.recovered += int(page_dict['rawData'][num]['Recovered'])
                 p.deaths += int(page_dict['rawData'][num]['Deaths'])
                 p.save()
             else:
-                if 'Princess' in page_dict['rawData'][num]['Province/State'] or page_dict['rawData'][num]['Province/State'] == 'US':
+                if 'Princess' in page_dict['rawData'][num]['Province_State'] or page_dict['rawData'][num]['Province_State'] == 'US':
                     pass
                 else:
                     province_object = Province(
-                        name=page_dict['rawData'][num]['Province/State'],
+                        name=page_dict['rawData'][num]['Province_State'],
                         country=Country.objects.get(
-                            name=page_dict['rawData'][num]['Country/Region']),
+                            name=page_dict['rawData'][num]['Country_Region']),
                         infected=int(page_dict['rawData'][num]['Confirmed']),
                         recovered=int(page_dict['rawData'][num]['Recovered']),
                         deaths=int(page_dict['rawData'][num]['Deaths']),
