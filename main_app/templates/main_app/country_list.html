@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Countries</h1>
+<table class="highlight">
+  <thead>
+    <tr>
+      <th>Country</th>
+      <th>Current Cases</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for country in country_list %}
+        <tr class="clickable" data-href="{% url 'countries_detail' country.id %}">
+          <td>{{ country.name }}</td>
+          <td>{{ country.infected }}</td>
+        </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<script>
+  $(document).ready(function () {
+    $('.clickable').click(function() {
+      window.location.href = this.dataset.href;
+    });
+  });
+</script>
+
+{% endblock %}
