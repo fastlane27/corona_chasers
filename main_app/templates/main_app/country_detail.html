@@ -2,6 +2,23 @@
 {% block content %}
 
 <h1 class="center">{{ country.name }}</h1>
+
+{% if user.is_authenticated %}
+<div>
+  {% if country in user.country_set.all  %}
+  <form action="{% url 'unassoc_country' country.id %}" method="post">
+    {% csrf_token %}
+    <input type="submit" value="Untrack">
+  </form>
+  {% else %}
+  <form action="{% url 'assoc_country' country.id %}" method="post">
+    {% csrf_token %}
+    <input type="submit" value="Track">
+  </form>
+  {% endif %}
+</div>
+{% endif %}
+
 <div class="container world">
   <div class="centered">
     <div class="col s12">
@@ -35,6 +52,7 @@
 
 <h1 class="left">Comments</h1>
 <div class="row">
+  {% if user.is_authenticated %}
   <form class="col s12" action="{% url 'add_comment' country.id %}" method="post">
     {% csrf_token %}
     {{ comment_form }}
@@ -42,6 +60,7 @@
         <i class="right material-icons">send</i>
     </button>
   </form>
+  {% endif %}
 </div>
 
 <div class="row">
