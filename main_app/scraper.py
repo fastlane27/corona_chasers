@@ -27,16 +27,6 @@ def pop_database():
         g.recovered = int(page_dict['summaryStats']['global']['recovered'])
         g.deaths = int(page_dict['summaryStats']['global']['deaths'])
         g.last_updated = page_dict['cache']['lastUpdated']
-        g.china_infected = int(page_dict['summaryStats']['china']['confirmed'])
-        g.china_recovered = int(
-            page_dict['summaryStats']['china']['recovered'])
-        g.china_deaths = int(page_dict['summaryStats']['china']['deaths'])
-        g.nonchina_infected = int(
-            page_dict['summaryStats']['nonChina']['confirmed'])
-        g.nonchina_recovered = int(
-            page_dict['summaryStats']['nonChina']['recovered'])
-        g.nonchina_deaths = int(
-            page_dict['summaryStats']['nonChina']['deaths'])
         g.save()
     else:
         global_object = Global(
