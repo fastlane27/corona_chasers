@@ -79,6 +79,16 @@ def unassoc_country(request, country_id):
     return redirect(request.META.get('HTTP_REFERER'))
 
 
+class ProfileList(ListView):
+    model = User
+    template_name = 'main_app/profile_list.html'
+
+    def get_queryset(self):
+        query = self.request.GET.get('search')
+        if query:
+            return User.objects.filter()
+
+
 class CountryList(ListView):
     model = Country
 
