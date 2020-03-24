@@ -1,31 +1,18 @@
+from datetime import datetime
 from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
 from django.contrib.auth import login
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
-from .forms import RegistrationForm
-from .models import Comment, Country, Profile
+from .forms import RegistrationForm, CommentForm
+from .models import Comment, Country, Global, Province
 from .scraper import pop_database
 
-pop_database()
-
-
-class CommentCreate(CreateView):
-    model = Comment
-    fields = '__all__'
-
-
-class CommentUpdate(UpdateView):
-    model = Comment
-    fields = ['posted_at', 'content']
-
-
-class CommentDelete(DeleteView):
-    model = Comment
-    success_url = '/countries/<int:country_id>/'
+# pop_database()
 
 
 def home(request):
-    return render(request, 'home.html')
+    world = Global.objects.first()
+    return render(request, 'home.html', {'world': world})
 
 
 def signup(request):
@@ -43,17 +30,32 @@ def signup(request):
     return render(request, 'registration/signup.html', context)
 
 
-def countries_index(request):
-    return render(request, 'countries/index.html')
+def add_comment(request, country_id):
+    form = CommentForm(request.POST)
+    if form.is_valid():
+        new_comment = form.save(commit=False)
+        new_comment.posted_at = datetime.now()
+        new_comment.created_by = request.user
+        new_comment.country_id = country_id
+        new_comment.save()
+    return redirect('countries_detail', pk=country_id)
 
 
-def countries_detail(request, country_id):
-    return render(request, 'countries/detail.html')
+def delete_comment(request, country_id, comment_id):
+    Comment.objects.get(id=comment_id).delete()
+    return redirect('countries_detail', pk=country_id)
 
 
-def profiles_detail(request, profile_id):
-    profile = Profile.objects.get(id=profile_id)
-    return render(request, 'profile.html', {'user': profile.user})
+def update_comment(request, country_id, comment_id):
+    comment = Comment.objects.get(id=comment_id)
+    comment.content = request.POST['content']
+    comment.save()
+    return redirect('countries_detail', pk=country_id)
+
+
+def profiles_detail(request, user_id):
+    user = User.objects.get(id=user_id)
+    return render(request, 'profile.html', {'profile_user': user})
 
 
 def assoc_country(request, profile, country_id):
@@ -66,3 +68,17 @@ def unassoc_country(request, profile, country_id):
 
 class CountryList(ListView):
     model = Country
+
+
+class CountryDetail(DetailView):
+    model = Country
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['comment_form'] = CommentForm()
+        return context
+
+
+class ProvinceList(ListView):
+    def get_queryset(self):
+        return Province.objects.filter(country=self.kwargs['pk'])

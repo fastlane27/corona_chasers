@@ -1,11 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
 
-{% if user.is_authenticated %}
-  <h3>Logged in as {{ user.username }}</h3>
-  <img src="{{ user.profile.avatar }}">
-{% endif %}
-
 <h1 class="center">World</h1>
 <div class="container world">
   <div class="centered">
@@ -22,9 +17,9 @@
             </thead>
             <tbody>
               <tr>
-                <td>123</td>
-                <td>1,000</td>
-                <td>1,000</td>
+                <td>{{ world.infected }}</td>
+                <td>{{ world.recovered }}</td>
+                <td>{{ world.deaths }}</td>
               </tr>
             </tbody>
           </table>
@@ -50,9 +45,9 @@
             </thead>
             <tbody>
               <tr>
-                <td>123</td>
-                <td>1,000</td>
-                <td>1,000</td>
+                <td>{{ world.china_infected }}</td>
+                <td>{{ world.china_recovered }}</td>
+                <td>{{ world.china_deaths }}</td>
               </tr>
             </tbody>
           </table>
@@ -78,9 +73,9 @@
             </thead>
             <tbody>
               <tr>
-                <td>123</td>
-                <td>1,000</td>
-                <td>1,000</td>
+                <td>{{ world.nonchina_infected }}</td>
+                <td>{{ world.nonchina_recovered }}</td>
+                <td>{{ world.nonchina_deaths }}</td>
               </tr>
             </tbody>
           </table>
