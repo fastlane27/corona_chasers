@@ -65,7 +65,7 @@ def profiles_detail(request, user_id):
 
 
 def update_avatar(request, user_id):
-    avatar = User.objects.get(id=request.user.id)
+    avatar = Profile.objects.get(user_id=request.user.id).avatar
     print(avatar)
     return redirect('profiles_detail', user_id=user_id)
 
