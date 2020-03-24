@@ -40,6 +40,19 @@ def pop_database():
 
     num = 0
 
+    for c in Country.objects.all():
+        c.infected = 0
+        c.recovered = 0
+        c.deaths = 0
+        c.save()
+
+    for p in Province.objects.all():
+        p.infected = 0
+        p.recovered = 0
+        p.deaths = 0
+        p.save()
+
+
     # Runs a loop for the amount of provinces/countries
     for all_sets in page_dict['rawData']:
         # If country has no provinces create/update country
