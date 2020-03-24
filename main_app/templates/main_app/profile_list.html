@@ -1,24 +1,24 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Countries</h1>
+<h1>Profiles</h1>
 
 <form action="" method="get">
-  <input type="search" name="search" placeholder="Search Country">
+  <input type="search" name="search" placeholder="Search Profile">
 </form>
 
 <table class="highlight">
   <thead>
-    <tr>
-      <th>Country</th>
-      <th>Current Cases</th>
-    </tr>
+      <tr>
+        <th></th>
+        <th></th>
+      </tr>
   </thead>
   <tbody>
-    {% for country in country_list %}
-        <tr class="clickable" data-href="{% url 'countries_detail' country.id %}">
-          <td>{{ country.name }}</td>
-          <td>{{ country.infected }}</td>
+    {% for p in user_list %}
+        <tr class="clickable" data-href="{% url 'profiles_detail' p.id %}">
+          <td><img src="{{ p.profile.avatar }}"></td>
+          <td>{{ p.username }}</td>
         </tr>
     {% endfor %}
   </tbody>
