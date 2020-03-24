@@ -23,6 +23,7 @@ class RegistrationForm(UserCreationForm):
         profile.save()
         return user
 
+
 class CommentForm(ModelForm):
     class Meta:
         model = Comment

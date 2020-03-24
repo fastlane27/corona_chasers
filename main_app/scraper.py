@@ -52,7 +52,6 @@ def pop_database():
         p.deaths = 0
         p.save()
 
-
     # Runs a loop for the amount of provinces/countries
     for all_sets in page_dict['rawData']:
         # If country has no provinces create/update country
