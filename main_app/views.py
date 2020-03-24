@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, DetailView
 from django.http import HttpResponseRedirect
 from .forms import RegistrationForm, CommentForm
-from .models import Comment, Country, Global, Province
+from .models import Comment, Country, Global, Province, Profile
 from .scraper import pop_database
 
 <<<<<<< HEAD
@@ -67,6 +67,12 @@ def profiles_detail(request, user_id):
     return render(request, 'profile.html', {'profile_user': user})
 
 
+def update_avatar(request, user_id):
+    avatar = User.objects.get(id=request.user.id)
+    print(avatar)
+    return redirect('profiles_detail', user_id=user_id)
+
+
 def assoc_country(request, country_id):
     country = Country.objects.get(id=country_id)
     country.related_user.add(request.user.id)
@@ -80,9 +86,26 @@ def unassoc_country(request, country_id):
 
 
 
+class ProfileList(ListView):
+    model = User
+    template_name = 'main_app/profile_list.html'
+
+    def get_queryset(self):
+        query = self.request.GET.get('search')
+        if query:
+            return User.objects.filter(username__icontains=query)
+        else:
+            return User.objects.all()
+
 class CountryList(ListView):
     model = Country
 
+    def get_queryset(self):
+        query = self.request.GET.get('search')
+        if query:
+            return Country.objects.filter(name__icontains=query)
+        else:
+            return Country.objects.all()
 
 class CountryDetail(DetailView):
     model = Country
@@ -92,7 +115,10 @@ class CountryDetail(DetailView):
         context['comment_form'] = CommentForm()
         return context
 
-
 class ProvinceList(ListView):
     def get_queryset(self):
-        return Province.objects.filter(country=self.kwargs['pk'])
+        query = self.request.GET.get('search')
+        if query:
+            return Province.objects.filter(country=self.kwargs['pk'], name__icontains=query)
+        else:
+            return Province.objects.filter(country=self.kwargs['pk'])
