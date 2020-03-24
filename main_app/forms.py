@@ -11,11 +11,11 @@ class RegistrationForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('username', 'password1', 'password2', 'avatar')
+        fields = ['username', 'password1', 'password2', 'avatar']
 
     def save(self, commit=True):
         user = super(RegistrationForm, self).save(commit=True)
-        avatar_file = self.files.get('avatar', None)
+        avatar_file = self.files['avatar']
         avatar_url = ''
         if avatar_file:
             avatar_url = upload_file(avatar_file)
