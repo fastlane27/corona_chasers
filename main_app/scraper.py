@@ -45,17 +45,6 @@ def pop_database():
             recovered=int(page_dict['summaryStats']['global']['recovered']),
             deaths=int(page_dict['summaryStats']['global']['deaths']),
             last_updated=page_dict['cache']['lastUpdated'],
-            china_infected=int(
-                page_dict['summaryStats']['china']['confirmed']),
-            china_recovered=int(
-                page_dict['summaryStats']['china']['recovered']),
-            china_deaths=int(page_dict['summaryStats']['china']['deaths']),
-            nonchina_infected=int(
-                page_dict['summaryStats']['nonChina']['confirmed']),
-            nonchina_recovered=int(
-                page_dict['summaryStats']['nonChina']['recovered']),
-            nonchina_deaths=int(
-                page_dict['summaryStats']['nonChina']['deaths']),
         )
         global_object.save()
 

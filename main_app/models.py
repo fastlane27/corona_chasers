@@ -8,12 +8,7 @@ class Global(models.Model):
     deaths = models.IntegerField()
     recovered = models.IntegerField()
     last_updated = models.CharField(max_length=100)
-    china_infected = models.IntegerField()
-    china_deaths = models.IntegerField()
-    china_recovered = models.IntegerField()
-    nonchina_infected = models.IntegerField()
-    nonchina_deaths = models.IntegerField()
-    nonchina_recovered = models.IntegerField()
+
 
     def __str__(self):
         return self.name
