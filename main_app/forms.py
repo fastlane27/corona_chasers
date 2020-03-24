@@ -15,7 +15,7 @@ class RegistrationForm(UserCreationForm):
 
     def save(self, commit=True):
         user = super(RegistrationForm, self).save(commit=True)
-        avatar_file = self.files['avatar']
+        avatar_file = self.files.get('avatar')
         avatar_url = ''
         if avatar_file:
             avatar_url = upload_file(avatar_file)

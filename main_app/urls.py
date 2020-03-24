@@ -11,8 +11,8 @@ urlpatterns = [
     path('countries/<int:country_id>/update_comment/<int:comment_id>/', views.update_comment, name='update_comment'),
     path('countries/<int:pk>/provinces/', views.ProvinceList.as_view(), name='provinces_index'),
     path('profiles/<int:user_id>/', views.profiles_detail, name='profiles_detail'),
-    # path('profiles/<int:profile_id>/assoc_country/<int:country_id>/',
-    #      views.assoc_country, name='assoc_country'),
-    # path('profiles/<int:profile_id>/unassoc_country/<int:country_id>/',
-    #      views.unassoc_country, name='unassoc_country'),
+    path('profiles/assoc_country/<int:country_id>/',
+         views.assoc_country, name='assoc_country'),
+    path('profiles/unassoc_country/<int:country_id>/',
+         views.unassoc_country, name='unassoc_country'),
 ]
