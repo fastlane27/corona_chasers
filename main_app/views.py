@@ -7,7 +7,7 @@ from .forms import RegistrationForm, CommentForm
 from .models import Comment, Country, Global, Province
 from .scraper import pop_database
 
-pop_database()
+# pop_database()
 
 
 def home(request):
