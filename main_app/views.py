@@ -10,7 +10,7 @@ from .models import Comment, Country, Global, Province, Profile
 from .scraper import pop_database
 
 
-pop_database()
+# pop_database()
 
 
 def home(request):
@@ -62,6 +62,12 @@ def update_comment(request, country_id, comment_id):
 def profiles_detail(request, user_id):
     user = User.objects.get(id=user_id)
     return render(request, 'profile.html', {'profile_user': user})
+
+
+def update_avatar(request, user_id):
+    avatar = User.objects.get(id=request.user.id)
+    print(avatar)
+    return redirect('profiles_detail', user_id=user_id)
 
 
 def assoc_country(request, country_id):
