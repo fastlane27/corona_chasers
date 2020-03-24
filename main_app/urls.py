@@ -14,4 +14,5 @@ urlpatterns = [
     path('countries/<int:pk>/provinces/', views.ProvinceList.as_view(), name='provinces_index'),
     path('profiles/', views.ProfileList.as_view(), name='profiles_index'),
     path('profiles/<int:user_id>/', views.profiles_detail, name='profiles_detail'),
+    path('profiles/<int:user_id>/update_avatar', views.update_avatar, name='update_avatar'),
 ]

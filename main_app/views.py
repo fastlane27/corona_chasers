@@ -5,8 +5,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.views.generic import ListView, DetailView
 from .forms import RegistrationForm, CommentForm
-from .models import Global, Country, Province, Comment
+from .models import Global, Country, Province, Comment, Profile
 from .scraper import pop_database
+from .utils import upload_file, delete_file
 
 # pop_database()
 
@@ -62,7 +63,21 @@ def update_comment(request, country_id, comment_id):
 
 def profiles_detail(request, user_id):
     user = User.objects.get(id=user_id)
-    return render(request, 'profile.html', {'profile_user': user})
+    return render(request, 'main_app/profiles_detail.html', {'profile_user': user})
+
+
+@login_required
+def update_avatar(request, user_id):
+    try:
+        profile = Profile.objects.get(user_id=request.user.id)
+        delete_file(profile.avatar)
+        avatar_file = request.FILES['pic']
+        new_avatar = upload_file(avatar_file)
+        profile.avatar = new_avatar
+        profile.save()
+    except:
+        pass
+    return redirect('profiles_detail', user_id=user_id)
 
 
 @login_required
@@ -86,11 +101,20 @@ class ProfileList(ListView):
     def get_queryset(self):
         query = self.request.GET.get('search')
         if query:
-            return User.objects.filter()
+            return User.objects.filter(username__icontains=query)
+        else:
+            return User.objects.all()
 
 
 class CountryList(ListView):
     model = Country
+
+    def get_queryset(self):
+        query = self.request.GET.get('search')
+        if query:
+            return Country.objects.filter(name__icontains=query)
+        else:
+            return Country.objects.all()
 
 
 class CountryDetail(DetailView):
@@ -104,4 +128,8 @@ class CountryDetail(DetailView):
 
 class ProvinceList(ListView):
     def get_queryset(self):
-        return Province.objects.filter(country=self.kwargs['pk'])
+        query = self.request.GET.get('search')
+        if query:
+            return Province.objects.filter(country=self.kwargs['pk'], name__icontains=query)
+        else:
+            return Province.objects.filter(country=self.kwargs['pk'])

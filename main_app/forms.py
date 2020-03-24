@@ -11,7 +11,7 @@ class RegistrationForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ['username', 'password1', 'password2', 'avatar']
+        fields = ('username', 'password1', 'password2', 'avatar')
 
     def save(self, commit=True):
         user = super(RegistrationForm, self).save(commit=True)
@@ -27,4 +27,4 @@ class RegistrationForm(UserCreationForm):
 class CommentForm(ModelForm):
     class Meta:
         model = Comment
-        fields = ['content']
+        fields = ('content',)

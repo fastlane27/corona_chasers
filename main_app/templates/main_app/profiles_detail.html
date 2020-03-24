@@ -2,6 +2,13 @@
 {% block content %}
 
 <img src="{{ profile_user.profile.avatar }}">
+
+<form action="{% url 'update_avatar' profile_user.id %}" enctype="multipart/form-data" method="post">
+  {% csrf_token %}
+  <input type="file" name="pic" required>
+  <input type="submit" value="Change Avatar">
+</form>
+
 <h1 class="center">{{ profile_user.username }}</h1>
 
 {% if profile_user.country_set.first %}
