@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.views.generic import ListView, DetailView
 from .forms import RegistrationForm, CommentForm, AvatarForm
-from .models import Global, Country, Province, Comment, Profile
+from .models import Global, Country, Province, Comment, Profile, County
 from .utils import delete_file
 
 
@@ -150,6 +150,28 @@ class ProvinceList(ListView):
             self.sort_type = 'ascend'
             return Province.objects.filter(country=self.kwargs['pk']).order_by(f'-{order_query}')
         return Province.objects.filter(country=self.kwargs['pk'])
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['sort_type'] = self.sort_type
+        return context
+
+class CountyList(ListView):
+    sort_type = 'ascend'
+
+    def get_queryset(self):
+        search_query = self.request.GET.get('search')
+        sort_query = self.request.GET.get('sort')
+        order_query = self.request.GET.get('order_by')
+        if search_query:
+            return County.objects.filter(province=self.kwargs['pk'], name__icontains=search_query)
+        if sort_query == 'ascend':
+            self.sort_type = 'descend'
+            return County.objects.filter(province=self.kwargs['pk']).order_by(order_query)
+        if sort_query == 'descend':
+            self.sort_type = 'ascend'
+            return County.objects.filter(province=self.kwargs['pk']).order_by(f'-{order_query}')
+        return County.objects.filter(province=self.kwargs['pk'])
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
