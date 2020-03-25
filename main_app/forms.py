@@ -19,6 +19,8 @@ class RegistrationForm(UserCreationForm):
         avatar_url = ''
         if avatar_file:
             avatar_url = upload_file(avatar_file)
+        else:
+            avatar_url = 'https://coronachaser.s3.us-east-2.amazonaws.com/996b39.png'
         profile = Profile(user=user, avatar=avatar_url)
         profile.save()
         return user

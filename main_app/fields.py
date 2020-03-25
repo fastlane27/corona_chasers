@@ -1,4 +1,3 @@
-
 from django import forms
 from django.template.defaultfilters import filesizeformat
 

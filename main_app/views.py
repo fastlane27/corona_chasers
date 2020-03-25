@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import datetime
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
@@ -72,11 +72,10 @@ def update_avatar(request):
     form = AvatarForm(request.POST, request.FILES)
     if form.is_valid():
         profile = Profile.objects.get(user_id=request.user.id)
-        delete_file(profile.avatar)
+        if profile.avatar:
+            delete_file(profile.avatar)
         profile.avatar = form.save()
         profile.save()
-    else:
-        print('Image file must be 250 kB or less')
     return redirect('profiles_detail', user_id=request.user.id)
 
 
@@ -101,20 +100,32 @@ class ProfileList(ListView):
     def get_queryset(self):
         query = self.request.GET.get('search')
         if query:
-            return User.objects.filter(username__icontains=query)
-        else:
-            return User.objects.all()
+            return User.objects.filter(username__icontains=query).order_by('username')
+        return User.objects.all().order_by('username')
 
 
 class CountryList(ListView):
     model = Country
+    sort_type = 'ascend'
 
     def get_queryset(self):
-        query = self.request.GET.get('search')
-        if query:
-            return Country.objects.filter(name__icontains=query)
-        else:
-            return Country.objects.all()
+        search_query = self.request.GET.get('search')
+        sort_query = self.request.GET.get('sort')
+        order_query = self.request.GET.get('order_by')
+        if search_query:
+            return Country.objects.filter(name__icontains=search_query)
+        if sort_query == 'ascend':
+            self.sort_type = 'descend'
+            return Country.objects.all().order_by(order_query)
+        if sort_query == 'descend':
+            self.sort_type = 'ascend'
+            return Country.objects.all().order_by(f'-{order_query}')
+        return Country.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['sort_type'] = self.sort_type
+        return context
 
 
 class CountryDetail(DetailView):
@@ -127,9 +138,23 @@ class CountryDetail(DetailView):
 
 
 class ProvinceList(ListView):
+    sort_type = 'ascend'
+
     def get_queryset(self):
-        query = self.request.GET.get('search')
-        if query:
-            return Province.objects.filter(country=self.kwargs['pk'], name__icontains=query)
-        else:
-            return Province.objects.filter(country=self.kwargs['pk'])
+        search_query = self.request.GET.get('search')
+        sort_query = self.request.GET.get('sort')
+        order_query = self.request.GET.get('order_by')
+        if search_query:
+            return Province.objects.filter(country=self.kwargs['pk'], name__icontains=search_query)
+        if sort_query == 'ascend':
+            self.sort_type = 'descend'
+            return Province.objects.filter(country=self.kwargs['pk']).order_by(order_query)
+        if sort_query == 'descend':
+            self.sort_type = 'ascend'
+            return Province.objects.filter(country=self.kwargs['pk']).order_by(f'-{order_query}')
+        return Province.objects.filter(country=self.kwargs['pk'])
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['sort_type'] = self.sort_type
+        return context
