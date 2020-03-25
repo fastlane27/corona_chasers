@@ -1,13 +1,13 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.views.generic import ListView, DetailView
-from .forms import RegistrationForm, CommentForm
+from .forms import RegistrationForm, CommentForm, AvatarForm
 from .models import Global, Country, Province, Comment, Profile
 from .scraper import pop_database
-from .utils import upload_file, delete_file
+from .utils import delete_file
 
 # pop_database()
 
@@ -56,28 +56,28 @@ def delete_comment(request, country_id, comment_id):
 def update_comment(request, country_id, comment_id):
     comment = Comment.objects.get(id=comment_id)
     if request.user.id == comment.created_by.id:
-        comment.content = request.POST['content']
+        comment.content = request.POST.get('content')
         comment.save()
     return redirect('countries_detail', pk=country_id)
 
 
 def profiles_detail(request, user_id):
     user = User.objects.get(id=user_id)
-    return render(request, 'main_app/profiles_detail.html', {'profile_user': user})
+    avatar_form = AvatarForm()
+    return render(request, 'main_app/profile_detail.html', {'profile_user': user, 'avatar_form': avatar_form})
 
 
 @login_required
-def update_avatar(request, user_id):
-    try:
+def update_avatar(request):
+    form = AvatarForm(request.POST, request.FILES)
+    if form.is_valid():
         profile = Profile.objects.get(user_id=request.user.id)
         delete_file(profile.avatar)
-        avatar_file = request.FILES['pic']
-        new_avatar = upload_file(avatar_file)
-        profile.avatar = new_avatar
+        profile.avatar = form.save()
         profile.save()
-    except:
-        pass
-    return redirect('profiles_detail', user_id=user_id)
+    else:
+        print('Image file must be 250 kB or less')
+    return redirect('profiles_detail', user_id=request.user.id)
 
 
 @login_required
