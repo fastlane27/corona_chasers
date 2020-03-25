@@ -10,8 +10,8 @@
 <table class="highlight">
   <thead>
     <tr>
-      <th>Country</th>
-      <th>Current Cases</th>
+      <th><a href="?order_by=name&sort={{ sort_type }}">Countries</a></th>
+      <th><a href="?order_by=infected&sort={{ sort_type }}">Current Cases</a></th>
     </tr>
   </thead>
   <tbody>
@@ -25,7 +25,8 @@
 </table>
 
 <script>
-  $(document).ready(function () {
+  $(document).ready(function() {
+    $('select').formSelect();
     $('.clickable').click(function() {
       window.location.href = this.dataset.href;
     });
