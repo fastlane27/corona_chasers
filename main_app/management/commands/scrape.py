@@ -1,8 +1,9 @@
 import json
-from django.core.management.base import BaseCommand
 from urllib.request import urlopen as user_req
+from django.core.management.base import BaseCommand
 from bs4 import BeautifulSoup as soup
 from main_app.models import Global, Country, Province, County
+
 
 class Command(BaseCommand):
     def handle(self, *args, **kwargs):
@@ -122,6 +123,7 @@ class Command(BaseCommand):
                             deaths=int(page_dict['rawData'][num]['Deaths']),
                         )
                         province_object.save()
+
                 if page_dict['rawData'][num]['Admin2'] != '':
                     # If county exists update, if not create
                     if page_dict['rawData'][num]['Admin2'] in County.objects.all().values_list('name', flat=True) and page_dict['rawData'][num]['Province_State'] in County.objects.all().values_list('province', flat=True):
@@ -145,4 +147,5 @@ class Command(BaseCommand):
                         )
                         county_object.save()
             num += 1
-        print('Scrape Complete!')
+
+        print('Scrape completed successfully!')

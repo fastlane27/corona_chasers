@@ -25,7 +25,7 @@
         <td>{{ province.recovered }}</td>
         <td>{{ province.deaths }}</td>
         {% if province.county_set.first %}
-        <td><a href="{% url 'counties_index' province.id %}">Counties</a></td>
+          <td><a href="{% url 'counties_index' province.id %}">Counties</a></td>
         {% endif %}
       </tr>
     {% endfor %}
