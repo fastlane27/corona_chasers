@@ -1,8 +1,9 @@
 import json
-from django.core.management.base import BaseCommand
 from urllib.request import urlopen as user_req
+from django.core.management.base import BaseCommand
 from bs4 import BeautifulSoup as soup
 from main_app.models import Global, Country, Province
+
 
 class Command(BaseCommand):
     def handle(self, *args, **kwargs):
