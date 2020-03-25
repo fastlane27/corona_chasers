@@ -1,14 +1,13 @@
 from datetime import datetime
 from django.shortcuts import render, redirect
-from django.contrib.auth.models import User
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.views.generic import ListView, DetailView
-from django.http import HttpResponseRedirect
-from .forms import RegistrationForm, CommentForm
-from .models import Comment, Country, Global, Province, Profile
+from .forms import RegistrationForm, CommentForm, AvatarForm
+from .models import Global, Country, Province, Comment, Profile
 from .scraper import pop_database
-
+from .utils import delete_file
 
 # pop_database()
 
@@ -32,6 +31,7 @@ def signup(request):
     context = {'form': form, 'error_message': error_message}
     return render(request, 'registration/signup.html', context)
 
+
 @login_required
 def add_comment(request, country_id):
     form = CommentForm(request.POST)
@@ -43,6 +43,7 @@ def add_comment(request, country_id):
         new_comment.save()
     return redirect('countries_detail', pk=country_id)
 
+
 @login_required
 def delete_comment(request, country_id, comment_id):
     comment = Comment.objects.get(id=comment_id)
@@ -50,37 +51,47 @@ def delete_comment(request, country_id, comment_id):
         comment.delete()
     return redirect('countries_detail', pk=country_id)
 
+
 @login_required
 def update_comment(request, country_id, comment_id):
     comment = Comment.objects.get(id=comment_id)
     if request.user.id == comment.created_by.id:
-        comment.content = request.POST['content']
+        comment.content = request.POST.get('content')
         comment.save()
     return redirect('countries_detail', pk=country_id)
 
 
 def profiles_detail(request, user_id):
     user = User.objects.get(id=user_id)
-    return render(request, 'profile.html', {'profile_user': user})
+    avatar_form = AvatarForm()
+    return render(request, 'main_app/profile_detail.html', {'profile_user': user, 'avatar_form': avatar_form})
 
 
-def update_avatar(request, user_id):
-    avatar = User.objects.get(id=request.user.id)
-    print(avatar)
-    return redirect('profiles_detail', user_id=user_id)
+@login_required
+def update_avatar(request):
+    form = AvatarForm(request.POST, request.FILES)
+    if form.is_valid():
+        profile = Profile.objects.get(user_id=request.user.id)
+        delete_file(profile.avatar)
+        profile.avatar = form.save()
+        profile.save()
+    else:
+        print('Image file must be 250 kB or less')
+    return redirect('profiles_detail', user_id=request.user.id)
 
 
+@login_required
 def assoc_country(request, country_id):
     country = Country.objects.get(id=country_id)
-    country.related_user.add(request.user.id)
+    country.users.add(request.user.id)
     return redirect('countries_detail', pk=country_id)
 
 
+@login_required
 def unassoc_country(request, country_id):
     country = Country.objects.get(id=country_id)
-    country.related_user.remove(request.user.id)
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-
+    country.users.remove(request.user.id)
+    return redirect(request.META.get('HTTP_REFERER'))
 
 
 class ProfileList(ListView):
@@ -94,6 +105,7 @@ class ProfileList(ListView):
         else:
             return User.objects.all()
 
+
 class CountryList(ListView):
     model = Country
 
@@ -104,6 +116,7 @@ class CountryList(ListView):
         else:
             return Country.objects.all()
 
+
 class CountryDetail(DetailView):
     model = Country
 
@@ -111,6 +124,7 @@ class CountryDetail(DetailView):
         context = super().get_context_data(**kwargs)
         context['comment_form'] = CommentForm()
         return context
+
 
 class ProvinceList(ListView):
     def get_queryset(self):

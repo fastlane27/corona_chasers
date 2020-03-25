@@ -3,8 +3,8 @@
 
 <h1>Countries</h1>
 
-<form action="" method="get">
-  <input type="search" name="search" placeholder="Search Country">
+<form method="get">
+  <input type="search" name="search" placeholder="Search Countries">
 </form>
 
 <table class="highlight">
@@ -16,10 +16,10 @@
   </thead>
   <tbody>
     {% for country in country_list %}
-        <tr class="clickable" data-href="{% url 'countries_detail' country.id %}">
-          <td>{{ country.name }}</td>
-          <td>{{ country.infected }}</td>
-        </tr>
+      <tr class="clickable" data-href="{% url 'countries_detail' country.id %}">
+        <td>{{ country.name }}</td>
+        <td>{{ country.infected }}</td>
+      </tr>
     {% endfor %}
   </tbody>
 </table>

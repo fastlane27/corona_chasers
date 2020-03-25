@@ -18,7 +18,7 @@ class Country(models.Model):
     infected = models.IntegerField()
     deaths = models.IntegerField()
     recovered = models.IntegerField()
-    related_user = models.ManyToManyField(User)
+    users = models.ManyToManyField(User)
 
     def __str__(self):
         return self.name
