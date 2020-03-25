@@ -9,8 +9,6 @@ from .models import Global, Country, Province, Comment, Profile
 from .scraper import pop_database
 from .utils import delete_file
 
-# pop_database()
-
 
 def home(request):
     world = Global.objects.first()
