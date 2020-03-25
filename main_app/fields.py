@@ -1,22 +1,18 @@
 
 from django import forms
 from django.template.defaultfilters import filesizeformat
-from django.utils.translation import ugettext_lazy as _
-from django.conf import settings
 
 
 class RestrictedImageField(forms.ImageField):
     def __init__(self, *args, **kwargs):
-        self.max_upload_size = kwargs.pop('max_upload_size', None)
-        if not self.max_upload_size:
-            self.max_upload_size = settings.MAX_UPLOAD_SIZE
+        self.max_file_size = kwargs.pop('max_file_size', None)
         super(RestrictedImageField, self).__init__(*args, **kwargs)
 
     def clean(self, *args, **kwargs):
         data = super(RestrictedImageField, self).clean(*args, **kwargs)
         try:
-            if data.size > self.max_upload_size:
-                raise forms.ValidationError(_('File size must be under %s. Current file size is %s.') % (filesizeformat(self.max_upload_size), filesizeformat(data.size)))
+            if data.size > self.max_file_size:
+                raise forms.ValidationError(('File size limit is %s, current file size is %s') % (filesizeformat(self.max_file_size), filesizeformat(data.size)))
         except AttributeError:
             pass
         return data

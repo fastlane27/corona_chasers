@@ -1,4 +1,3 @@
-from django import forms
 from django.forms import ModelForm, Form
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -8,7 +7,7 @@ from .fields import RestrictedImageField
 
 
 class RegistrationForm(UserCreationForm):
-    avatar = forms.ImageField(required=False)
+    avatar = RestrictedImageField(max_file_size=256000, required=False)
 
     class Meta:
         model = User
@@ -32,7 +31,7 @@ class CommentForm(ModelForm):
 
 
 class AvatarForm(Form):
-    avatar = RestrictedImageField(max_upload_size=256000)
+    avatar = RestrictedImageField(max_file_size=256000)
 
     def save(self):
         avatar_file = self.cleaned_data.get('avatar')
