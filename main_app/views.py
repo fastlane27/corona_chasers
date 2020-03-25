@@ -156,6 +156,7 @@ class ProvinceList(ListView):
         context['sort_type'] = self.sort_type
         return context
 
+
 class CountyList(ListView):
     sort_type = 'ascend'
 

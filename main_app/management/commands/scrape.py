@@ -122,6 +122,7 @@ class Command(BaseCommand):
                             deaths=int(page_dict['rawData'][num]['Deaths']),
                         )
                         province_object.save()
+
                 if page_dict['rawData'][num]['Admin2'] != '':
                     # If county exists update, if not create
                     if page_dict['rawData'][num]['Admin2'] in County.objects.all().values_list('name', flat=True) and page_dict['rawData'][num]['Province_State'] in County.objects.all().values_list('province', flat=True):
@@ -145,4 +146,5 @@ class Command(BaseCommand):
                         )
                         county_object.save()
             num += 1
-        print('Scrape Complete!')
+
+        print('Scrape completed successfully!')
