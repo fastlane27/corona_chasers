@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-
 {% block content %}
 
 <h1>Sign Up</h1>
@@ -9,7 +8,7 @@
 <form method="post" action="{% url 'signup' %}" enctype="multipart/form-data">
   {% csrf_token %}
   {{ form.as_p }}
-  <input type="submit" value="Signup">
+  <input type="submit" value="Sign Up">
 </form>
 
 {% endblock %}
