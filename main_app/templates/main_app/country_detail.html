@@ -65,12 +65,14 @@
 
 <div class="row">
   {% for comment in country.comment_set.all %}
-    <h4 class="left"><a href="{% url 'profiles_detail' comment.created_by.id %}">{{ comment.created_by }}</a></h4>
+    <h4 class="left"><a href="{% url 'profiles_detail' comment.created_by.id %}">{{ comment.created_by.username }}</a></h4>
     <img src="{{ comment.created_by.profile.avatar }}" width=70px height=50px>
     <div>
       <p>{{ comment.content }}</p>
       <p>{{ comment.posted_at }}</p>
-      <button id="edit-btn" data-id="{{ forloop.counter }}">Edit</button>
+      {% if user.id == comment.created_by.id %}
+        <button id="edit-btn" data-id="{{ forloop.counter }}">Edit</button>
+      {% endif %}
     </div>
     <div class="edit-form" data-id="{{ forloop.counter }}">
       <form action="{% url 'update_comment' country.id comment.id %}" method="post">
