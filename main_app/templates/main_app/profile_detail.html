@@ -28,10 +28,12 @@
           <td class="clickable" data-href="{% url 'countries_detail' c.id %}">{{ c.name }}</td>
           <td class="clickable" data-href="{% url 'countries_detail' c.id %}">{{ c.infected }}</td>
           {% if user.id == profile_user.id %}
-            <td><form action="{% url 'unassoc_country' c.id %}" method="post">
-              {% csrf_token %}
-              <input type="submit" value="Untrack">
-            </form></td>
+            <td>
+              <form action="{% url 'unassoc_country' c.id %}" method="post">
+                {% csrf_token %}
+                <input type="submit" value="Untrack">
+              </form>
+            </td>
           {% endif %}
         </tr>
       {% endfor %}
@@ -40,13 +42,5 @@
 {% else %}
   <h3>No Countries Currently Tracked</h3>
 {% endif %}
-
-<script>
-  $(document).ready(function () {
-    $('.clickable').click(function() {
-      window.location.href = this.dataset.href;
-    });
-  });
-</script>
 
 {% endblock %}
