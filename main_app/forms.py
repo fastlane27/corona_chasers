@@ -1,8 +1,9 @@
+from django import forms
 from django.forms import ModelForm, Form
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Profile, Comment
-from .utils import upload_file
+from .utils import upload_file, DEFAULT_URL
 from .fields import RestrictedImageField
 
 
@@ -19,6 +20,8 @@ class RegistrationForm(UserCreationForm):
         avatar_url = ''
         if avatar_file:
             avatar_url = upload_file(avatar_file)
+        else:
+            avatar_url = DEFAULT_URL
         profile = Profile(user=user, avatar=avatar_url)
         profile.save()
         return user
@@ -28,6 +31,14 @@ class CommentForm(ModelForm):
     class Meta:
         model = Comment
         fields = ('content',)
+
+
+class CommentUpdateForm(Form):
+    content = forms.CharField(widget=forms.Textarea, max_length=250)
+
+    def save(self):
+        content = self.cleaned_data.get('content')
+        return content
 
 
 class AvatarForm(Form):
