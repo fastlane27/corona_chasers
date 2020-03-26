@@ -70,7 +70,9 @@
     <div>
       <p>{{ comment.content }}</p>
       <p>{{ comment.posted_at }}</p>
-      <button id="edit-btn" data-id="{{ forloop.counter }}">Edit</button>
+      {% if user.id == comment.created_by.id %}
+        <button id="edit-btn" data-id="{{ forloop.counter }}">Edit</button>
+      {% endif %}
     </div>
     <div class="edit-form" data-id="{{ forloop.counter }}">
       <form action="{% url 'update_comment' country.id comment.id %}" method="post">
