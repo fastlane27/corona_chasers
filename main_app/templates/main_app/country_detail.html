@@ -70,9 +70,8 @@
     <div>
       <p>{{ comment.content }}</p>
       <p>{{ comment.posted_at }}</p>
-      {% if user.id == comment.created_by.id %}
-        <button id="edit-btn" data-id="{{ forloop.counter }}">Edit</button>
-      {% endif %}
+    {% if user.id == comment.created_by.id %}
+      <button id="edit-btn" data-id="{{ forloop.counter }}">Edit</button>
     </div>
     <div class="edit-form" data-id="{{ forloop.counter }}">
       <form action="{% url 'update_comment' country.id comment.id %}" method="post">
@@ -84,6 +83,7 @@
         {% csrf_token %}
         <input type="submit" value="Delete">
       </form>
+    {% endif %}
     </div>
   {% endfor %}
 </div>
