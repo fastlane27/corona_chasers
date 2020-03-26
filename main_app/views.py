@@ -8,11 +8,6 @@ from .forms import RegistrationForm, CommentForm, CommentUpdateForm, AvatarForm
 from .models import Global, Country, Province, Comment, Profile, County
 from .utils import delete_file
 
-<<<<<<< HEAD
-pop_database()
-
-=======
->>>>>>> master
 
 def home(request):
     world = Global.objects.first()
