@@ -15,6 +15,7 @@ Corona Chasers is a web app that tracks the coronavirus cases around the world. 
 - jQuery
 - JavaScript
 - CSS (Materialize)
+- Heroku
 
 ## Getting Started
 - Get Chasing!
