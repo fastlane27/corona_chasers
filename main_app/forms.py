@@ -3,7 +3,7 @@ from django.forms import ModelForm, Form
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Profile, Comment
-from .utils import upload_file
+from .utils import upload_file, DEFAULT_URL
 from .fields import RestrictedImageField
 
 
@@ -21,7 +21,7 @@ class RegistrationForm(UserCreationForm):
         if avatar_file:
             avatar_url = upload_file(avatar_file)
         else:
-            avatar_url = 'https://coronachaser.s3.us-east-2.amazonaws.com/996b39.png'
+            avatar_url = DEFAULT_URL
         profile = Profile(user=user, avatar=avatar_url)
         profile.save()
         return user

@@ -58,22 +58,20 @@ def update_comment(request, country_id, comment_id):
 
 
 def profiles_detail(request, user_id):
+    if request.method == 'POST':
+        form = AvatarForm(request.POST, request.FILES)
+        if form.is_valid():
+            profile = Profile.objects.get(user_id=request.user.id)
+            if profile.avatar:
+                delete_file(profile.avatar)
+            profile.avatar = form.save()
+            profile.save()
+            return redirect('profiles_detail', user_id=request.user.id)
+    else:
+        form = AvatarForm()
     user = User.objects.get(id=user_id)
-    avatar_form = AvatarForm()
-    context = {'profile_user': user, 'avatar_form': avatar_form}
+    context = {'profile_user': user, 'avatar_form': form}
     return render(request, 'main_app/profile_detail.html', context)
-
-
-@login_required
-def update_avatar(request):
-    form = AvatarForm(request.POST, request.FILES)
-    if form.is_valid():
-        profile = Profile.objects.get(user_id=request.user.id)
-        if profile.avatar:
-            delete_file(profile.avatar)
-        profile.avatar = form.save()
-        profile.save()
-    return redirect('profiles_detail', user_id=request.user.id)
 
 
 @login_required

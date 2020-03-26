@@ -4,7 +4,7 @@
 <img src="{{ profile_user.profile.avatar }}">
 
 {% if user.id == profile_user.id %}
-  <form action="{% url 'update_avatar' %}" enctype="multipart/form-data" method="post">
+  <form action="" enctype="multipart/form-data" method="post">
     {% csrf_token %}
     {{ avatar_form }}
     <input type="submit" value="Change Avatar">
