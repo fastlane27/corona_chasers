@@ -23,4 +23,6 @@ Corona Chasers is a web app that tracks the coronavirus cases around the world. 
 - Pitch: https://docs.google.com/presentation/d/1noLgtjdykNEnYnto8MV6YupzmeW0bvVheTPSSVmq8po/edit?ts=5e6f987c#slide=id.p
 
 ## Next Steps
-- 
+- Pages within a page for long lists
+- Ability to reply to comments
+- "Search all" area for more specifc search
